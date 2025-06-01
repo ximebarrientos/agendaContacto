@@ -11,20 +11,24 @@ function abrirModalContacto() {
 function crearContacto() {
   //to do traer todos los datos del formulario validados
   //crear un objeto Contacto
-  const nuevoContacto = new Contacto(
-    "juan",
-    "perez",
-    "23423423",
-    "juanperez@mail.com"
-  );
+  const nuevoContacto = new Contacto(inputNombre.value, inputApellido.value, inputTelefono.value, inputEmail.value, inputImagen.value, inputNotas.value);
   console.log(nuevoContacto);
   //almacenar el objeto en la agenda
+  agenda.push(nuevoContacto)
+  console.log(agenda)
 }
 
 //declaro variables
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
 const formularioCrearContacto = document.querySelector("form");
 const agenda = [];
+//traigo todos los input
+const inputNombre=document.querySelector("#nombre")
+const inputApellido=document.querySelector("#apellido")
+const inputEmail=document.querySelector("#email")
+const inputTelefono=document.querySelector("#telefono")
+const inputNotas=document.querySelector("#notas")
+const inputImagen=document.querySelector("#imagen")
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", abrirModalContacto);

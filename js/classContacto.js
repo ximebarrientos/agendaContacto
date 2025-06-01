@@ -11,9 +11,9 @@ export default class Contacto{
         this.#nombre = nombre;
         this.#apellido = apellido;
         this.#telefono = telefono;
-        this.#email= email
-        this.#imagen=imagen
-        this.#notas=notas
+        this.#email= email;
+        this.#imagen=imagen;
+        this.#notas=notas;
     }
 
     //agregar los get y set

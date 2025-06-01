@@ -153,7 +153,7 @@
                   class="form-control"
                   id="nombre"
                   aria-describedby="ingresar nombre"
-                  minlenght="2" maxlength="50"
+                  minlenght="2" maxlength="50" placeholder="Ej: Juan"
                 />
               </div>
               <div class="mb-3">
@@ -164,8 +164,53 @@
                   type="text"
                   class="form-control"
                   id="apellido"
-                  minlength="2" maxlength="50"
+                  minlength="2" maxlength="50" placeholder="Ej: Perez"
                 />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  minlength="2" maxlength="50"
+                  placeholder="Ej: juanperez@gmail.com"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="telefono" class="form-label"
+                  >Teléfono</label
+                >
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="telefono"
+                  minlength="2" maxlength="20"
+                  placeholder="Ej: +5491234567"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="imagen" class="form-label"
+                  >Imagen</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="imagen"
+                  minlength="2" maxlength="20"
+                  placeholder="Ej: http://image"
+                />
+              <div class="mb-3">
+                <label for="notas" class="form-label"
+                  >Notas</label
+                >
+                <textarea
+                  class="form-control"
+                  id="notas"
+                  placeholder="Agrega tus notas aquí" maxlength="250"
+                ></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
