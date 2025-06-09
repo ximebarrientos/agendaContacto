@@ -33,7 +33,7 @@ function guardarEnElLocalStorage(){
 //declaro variables
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
 const formularioCrearContacto = document.querySelector("form");
-const agenda = [];
+const agenda = JSON.parse(localStorage.getItem("agendaKey"))||[];//asi me aseguro que agenda siempre sea un array
 //traigo todos los input
 const inputNombre=document.querySelector("#nombre")
 const inputApellido=document.querySelector("#apellido")
