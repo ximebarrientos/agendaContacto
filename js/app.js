@@ -29,6 +29,17 @@ function limpiarFormulario(){
 function guardarEnElLocalStorage(){
   localStorage.setItem("agendaKey",JSON.stringify(agenda))
 }
+function cargaDatosContacto(){
+  //verificar en localstorage si hay datos para mostrar en la tabla
+  if(agenda.lenght !== 0){
+    //dibujar cada fila con su respectivos datos
+    agenda.map((contacto)=>dibujarFila(contacto))
+  }
+  //mostrar un mensaje al usuario, no hay datos para mostrar
+  }
+function dibujarFila(contacto){
+  //aqui voy a dibujar una sola fila con sus datos
+}
 
 //declaro variables
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
@@ -49,3 +60,5 @@ formularioCrearContacto.addEventListener("submit", (e) => {
   //el usuario completa el form y debo crear un objeto contacto
   crearContacto();
 });
+
+cargaDatosContacto()
