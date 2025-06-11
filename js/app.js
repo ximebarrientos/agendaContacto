@@ -29,6 +29,13 @@ function crearContacto() {
 });
 }
 
+//function eliminarContacto(){
+//  console.log("desde fn eliminar contacto")
+//
+//} esta fn no sirve porque si so si primero tengo que tener creada la fila
+
+
+
 //limpiar el form
 function limpiarFormulario(){
   formularioCrearContacto.reset()
@@ -57,12 +64,16 @@ function dibujarFila(contacto,index){
                 <button class="btn btn-warning">
                   <i class="bi bi-pen"></i>
                 </button>
-                <button class="btn btn-danger">
+                <button class="btn btn-danger" onclick="eliminarContacto()">
                   <i class="bi bi-trash"></i>
                 </button>
                 <button class="btn btn-info"><i class="bi bi-eye"></i></button>
               </td>
             </tr>`
+}
+
+window.eliminarContacto=()=>{
+  console.log("desde fn eliminar contacto")
 }
 
 //declaro variables
