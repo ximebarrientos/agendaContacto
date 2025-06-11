@@ -21,6 +21,12 @@ function crearContacto() {
   limpiarFormulario()
   //queremos dibujar una fila
   dibujarFila(nuevoContacto,agenda.lenght)
+  //agregamos un mensaje al usuario
+  Swal.fire({
+  title: "Contacto creado",
+  text: `El contacto ${nuevoContacto.nombre} fue creado correctamente`,
+  icon: "success"
+});
 }
 
 //limpiar el form
@@ -82,3 +88,4 @@ formularioCrearContacto.addEventListener("submit", (e) => {
 });
 
 cargaDatosContacto() //hago que apenas se abra la pagina se carguen los contactos
+
