@@ -33,12 +33,28 @@ function cargaDatosContacto(){
   //verificar en localstorage si hay datos para mostrar en la tabla
   if(agenda.lenght !== 0){
     //dibujar cada fila con su respectivos datos
-    agenda.map((contacto)=>dibujarFila(contacto))
+    agenda.map((contacto,index)=>dibujarFila(contacto,index+1))
   }
   //mostrar un mensaje al usuario, no hay datos para mostrar
-  }
-function dibujarFila(contacto){
-  //aqui voy a dibujar una sola fila con sus datos
+}
+function dibujarFila(contacto,index){
+  //aqui voy a dibujar una sola fila con sus datos, tengo que buscal el padre del tr se pone += para que no se sobreescriba
+  tablaContacto.innerHTML +=`<tr> 
+              <th scope="row">${index}</th>
+              <td>${contacto.nombre}</td>
+              <td>${contacto.apellido}</td>
+              <td>${contacto.telefono}</td>
+              <td>${contacto.email}</td>
+              <td>
+                <button class="btn btn-warning">
+                  <i class="bi bi-pen"></i>
+                </button>
+                <button class="btn btn-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+                <button class="btn btn-info"><i class="bi bi-eye"></i></button>
+              </td>
+            </tr>`
 }
 
 //declaro variables
@@ -52,6 +68,8 @@ const inputEmail=document.querySelector("#email")
 const inputTelefono=document.querySelector("#telefono")
 const inputNotas=document.querySelector("#notas")
 const inputImagen=document.querySelector("#imagen")
+//padre de tr
+const tablaContacto=document.getElementById("tablaContacto")
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", abrirModalContacto);
@@ -61,4 +79,4 @@ formularioCrearContacto.addEventListener("submit", (e) => {
   crearContacto();
 });
 
-cargaDatosContacto()
+cargaDatosContacto() //hago que apenas se abra la pagina se carguen los contactos
