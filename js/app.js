@@ -19,6 +19,8 @@ function crearContacto() {
   guardarEnElLocalStorage()
   //limpia el form
   limpiarFormulario()
+  //queremos dibujar una fila
+  dibujarFila(nuevoContacto,agenda.lenght)
 }
 
 //limpiar el form
