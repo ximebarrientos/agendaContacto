@@ -20,7 +20,7 @@ function crearContacto() {
   //limpia el form
   limpiarFormulario()
   //queremos dibujar una fila
-  dibujarFila(nuevoContacto,agenda.lenght)
+  dibujarFila(nuevoContacto,agenda.length)
   //agregamos un mensaje al usuario
   Swal.fire({
   title: "Contacto creado",
@@ -57,7 +57,7 @@ function dibujarFila(contacto, index){
                 <button class="btn btn-warning">
                   <i class="bi bi-pen"></i>
                 </button>
-                <button class="btn btn-danger" onclick="eliminarContacto()">
+                <button class="btn btn-danger" onclick="eliminarContacto('${contacto.id}')">
                   <i class="bi bi-trash"></i>
                 </button>
                 <button class="btn btn-info"><i class="bi bi-eye"></i></button>
@@ -65,16 +65,15 @@ function dibujarFila(contacto, index){
             </tr>`
 }
 
-window.eliminarContacto=()=>{
-  console.log("desde fn eliminar contacto")
+window.eliminarContacto=(id)=>{
   //obtener el id del contacto a borrar
-
+  console.log("desde fn eliminar contacto",id)
   //buscar en la agenda cual es el contacto que tiene tal id
-
+  const posicionContacto=agenda.findIndex((contacto)=>contacto.id===id)
   //borrar de la agenda el contacto con id X
-
+  agenda.splice(posicionContacto,1)
   //actualizar los datos del localstorage
-
+  guardarEnElLocalStorage()
   //actualizar la tabla de contactos
 }
 
