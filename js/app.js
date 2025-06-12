@@ -29,13 +29,6 @@ function crearContacto() {
 });
 }
 
-//function eliminarContacto(){
-//  console.log("desde fn eliminar contacto")
-//
-//} esta fn no sirve porque si so si primero tengo que tener creada la fila
-
-
-
 //limpiar el form
 function limpiarFormulario(){
   formularioCrearContacto.reset()
@@ -46,16 +39,16 @@ function guardarEnElLocalStorage(){
 }
 function cargaDatosContacto(){
   //verificar en localstorage si hay datos para mostrar en la tabla
-  if(agenda.lenght !== 0){
+  if(agenda.length !== 0){
     //dibujar cada fila con su respectivos datos
-    agenda.map((contacto,index)=>dibujarFila(contacto,index+1))
+    agenda.map((contacto,index)=>dibujarFila(contacto, index + 1));
   }
   //mostrar un mensaje al usuario, no hay datos para mostrar
 }
-function dibujarFila(contacto,index){
+function dibujarFila(contacto, index){
   //aqui voy a dibujar una sola fila con sus datos, tengo que buscal el padre del tr se pone += para que no se sobreescriba
   tablaContacto.innerHTML +=`<tr> 
-              <th scope="row">${index}</th>
+              <th scope="row">${index} </th>
               <td>${contacto.nombre}</td>
               <td>${contacto.apellido}</td>
               <td>${contacto.telefono}</td>
@@ -74,6 +67,15 @@ function dibujarFila(contacto,index){
 
 window.eliminarContacto=()=>{
   console.log("desde fn eliminar contacto")
+  //obtener el id del contacto a borrar
+
+  //buscar en la agenda cual es el contacto que tiene tal id
+
+  //borrar de la agenda el contacto con id X
+
+  //actualizar los datos del localstorage
+
+  //actualizar la tabla de contactos
 }
 
 //declaro variables

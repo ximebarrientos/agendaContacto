@@ -44,6 +44,30 @@ export default class Contacto{
     get notas() {
         return this.#notas;
     }
+    // Setters
+    set nombre(nuevoNombre) {
+        this.#nombre = nuevoNombre;
+    }
+
+    set apellido(nuevoApellido) {
+        this.#apellido = nuevoApellido;
+    }
+
+    set telefono(nuevoTelefono) {
+        this.#telefono = nuevoTelefono;
+    }
+
+    set email(nuevoEmail) {
+        this.#email = nuevoEmail;
+    }
+
+    set imagen(nuevaImagen) {
+        this.#imagen = nuevaImagen;
+    }
+
+    set notas(nuevasNotas) {
+        this.#notas = nuevasNotas;
+    }
     //metodo para el stringify
     toJSON(){
         return{
