@@ -66,15 +66,34 @@ function dibujarFila(contacto, index){
 }
 
 window.eliminarContacto=(id)=>{
-  //obtener el id del contacto a borrar
-  console.log("desde fn eliminar contacto",id)
-  //buscar en la agenda cual es el contacto que tiene tal id
-  const posicionContacto=agenda.findIndex((contacto)=>contacto.id===id)
-  //borrar de la agenda el contacto con id X
-  agenda.splice(posicionContacto,1)
-  //actualizar los datos del localstorage
-  guardarEnElLocalStorage()
-  //actualizar la tabla de contactos
+  Swal.fire({
+  title: "Estás por eliminar un contacto",
+  text: "Si decides eliminar, no puedes revertir este paso",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#78c2ad",
+  cancelButtonColor: "#ff7851",
+  confirmButtonText: "Borrar",
+  cancelButtonText: "Salir"
+}).then((result) => {
+  if (result.isConfirmed) {
+    //aqui agrego el codigo de qué quiero borrar
+    //obtener el id del contacto a borrar
+    //buscar en la agenda cual es el contacto que tiene tal id
+    const posicionContacto=agenda.findIndex((contacto)=>contacto.id===id)
+    //borrar de la agenda el contacto con id X
+    agenda.splice(posicionContacto,1)
+    //actualizar los datos del localstorage
+    guardarEnElLocalStorage()
+    //actualizar la tabla de contactos
+    tablaContacto.removeChild(tablaContacto.children[posicionContacto])
+    Swal.fire({
+      title: "Contacto eliminado",
+      text: "El contacto se borro correctamente",
+      icon: "success"
+    });
+  }
+});
 }
 
 //declaro variables
