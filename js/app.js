@@ -5,8 +5,10 @@ function abrirModalContacto() {
   const modalCrearContacto = new bootstrap.Modal(
     document.getElementById("crearContacto")
   );
+  limpiarFormulario()
   //mostrar ventana modal show es un metodo
   modalCrearContacto.show();
+  creandoContacto=true
 }
 function crearContacto() {
   //to do traer todos los datos del formulario validados
@@ -105,20 +107,49 @@ window.eliminarContacto = (id) => {
   });
 };
 
+function editarContacto() {
+  //tomar los datos del formulario
+  console.log(idContacto)
+  //buscar en el array donde esta el contacto que estoy editando para actualizar sus propiedades
+  const posicionContactoActualizar=agenda.findIndex((contacto)=>contacto.id===idContacto)
+  agenda[posicionContactoActualizar].nombre=inputNombre.value
+  agenda[posicionContactoActualizar].apellido=inputApellido.value
+  agenda[posicionContactoActualizar].telefono=inputTelefono.value
+  agenda[posicionContactoActualizar].email=inputEmail.value
+  agenda[posicionContactoActualizar].imagen=inputImagen.value
+  agenda[posicionContactoActualizar].notas=inputNotas.value
+  
+  //actualizar localstorage
+  guardarEnElLocalStorage()
+  //mostrar un mje al usuario indicando que se actualizo el contacto
+  Swal.fire({
+    title: "Contacto modificado",
+    text: `El contacto ${ agenda[posicionContactoActualizar].nombre} fue modificado correctamente`,
+    icon: "success",
+  });
+  //actualizar la tabla de contactos
+  //traer la fila de la tabla que coincide con la variable posicionContactoActualizar y modificar sus datos
+
+}
+
 window.prepararContacto = (id) => {
   //buscar la informacion del usuario para agregar al modal
   const contactoBuscado = agenda.find((contacto) => contacto.id === id);
-  //cargar datos en el formulario
-  inputNombre.value=contactoBuscado.nombre
-  inputApellido.value=contactoBuscado.apellido
-  inputEmail.value=contactoBuscado.email
-  inputTelefono.value=contactoBuscado.telefono
-  inputImagen.value=contactoBuscado.imagen
-  inputNotas.value=contactoBuscado.notas
   //modificar el titulo de la ventana modal
-  const tituloModal=document.querySelector(".modal-title")
-  tituloModal.textContent="Modificar Contacto"
+  const tituloModal = document.querySelector(".modal-title");
+  tituloModal.textContent = "Modificar Contacto";
   abrirModalContacto();
+  //cargar datos en el formulario
+  inputNombre.value = contactoBuscado.nombre;
+  inputApellido.value = contactoBuscado.apellido;
+  inputEmail.value = contactoBuscado.email;
+  inputTelefono.value = contactoBuscado.telefono;
+  inputImagen.value = contactoBuscado.imagen;
+  inputNotas.value = contactoBuscado.notas;
+  //cambiamos la variable para editar
+  creandoContacto=false
+  //guardar el id del contacto que quiero modificar
+  idContacto=id
 };
 
 //declaro variables
@@ -134,13 +165,21 @@ const inputNotas = document.querySelector("#notas");
 const inputImagen = document.querySelector("#imagen");
 //padre de tr
 const tablaContacto = document.getElementById("tablaContacto");
+//variable booleana
+let creandoContacto = true; //elsubmit me cree un contacto, pero si la pongo el false que el submit sea editar contacto
+//variable para poder editar un contacto es especifico
+let idContacto=null;
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", abrirModalContacto);
 formularioCrearContacto.addEventListener("submit", (e) => {
   e.preventDefault();
-  //el usuario completa el form y debo crear un objeto contacto
-  crearContacto();
+  if (creandoContacto === true) {
+    //el usuario completa el form y debo crear un objeto contacto
+    crearContacto();
+  } else {
+    editarContacto();
+  }
 });
 
 cargaDatosContacto(); //hago que apenas se abra la pagina se carguen los contactos
