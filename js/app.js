@@ -69,7 +69,7 @@ function dibujarFila(contacto, index) {
                 <button class="btn btn-danger" onclick="eliminarContacto('${contacto.id}')">
                   <i class="bi bi-trash"></i>
                 </button>
-                <button class="btn btn-info"><i class="bi bi-eye"></i></button>
+                <button class="btn btn-info" onclick="verContacto('${contacto.id}')"><i class="bi bi-eye"></i></button>
               </td>
             </tr>`;
 }
@@ -151,6 +151,13 @@ window.prepararContacto = (id) => {
   //guardar el id del contacto que quiero modificar
   idContacto=id
 };
+
+window.verContacto=(id)=>{
+  console.log(id);
+  console.log(window.location)
+  window.location.href="/pages7detalleContacto.html?id="+id
+
+}
 
 //declaro variables
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
