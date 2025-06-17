@@ -155,7 +155,7 @@ window.prepararContacto = (id) => {
 window.verContacto=(id)=>{
   console.log(id);
   console.log(window.location)
-  window.location.href="/pages7detalleContacto.html?id="+id
+  window.location.href="/pages/detalleContacto.html?id="+id
 
 }
 
