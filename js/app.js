@@ -5,42 +5,48 @@ function abrirModalContacto() {
   const modalCrearContacto = new bootstrap.Modal(
     document.getElementById("crearContacto")
   );
-  limpiarFormulario()
+  limpiarFormulario();
   //mostrar ventana modal show es un metodo
   modalCrearContacto.show();
-  creandoContacto=true
+  creandoContacto = true;
 }
 function crearContacto() {
   //to do traer todos los datos del formulario validados
-  //crear un objeto Contacto
-  const nuevoContacto = new Contacto(
-    inputNombre.value,
-    inputApellido.value,
-    inputTelefono.value,
-    inputEmail.value,
-    inputImagen.value,
-    inputNotas.value
-  );
-  console.log(nuevoContacto);
-  //almacenar el objeto en la agenda
-  agenda.push(nuevoContacto);
-  console.log(agenda);
-  guardarEnElLocalStorage();
-  //limpia el form
-  limpiarFormulario();
-  //queremos dibujar una fila
-  dibujarFila(nuevoContacto, agenda.length);
-  //agregamos un mensaje al usuario
-  Swal.fire({
-    title: "Contacto creado",
-    text: `El contacto ${nuevoContacto.nombre} fue creado correctamente`,
-    icon: "success",
-  });
+  if (validaciones()){
+    //crear un objeto Contacto
+    const nuevoContacto = new Contacto(
+      inputNombre.value,
+      inputApellido.value,
+      inputTelefono.value,
+      inputEmail.value,
+      inputImagen.value,
+      inputNotas.value
+    );
+    console.log(nuevoContacto);
+    //almacenar el objeto en la agenda
+    agenda.push(nuevoContacto);
+    console.log(agenda);
+    guardarEnElLocalStorage();
+    //limpia el form
+    limpiarFormulario();
+    //queremos dibujar una fila
+    dibujarFila(nuevoContacto, agenda.length);
+    //agregamos un mensaje al usuario
+    Swal.fire({
+      title: "Contacto creado",
+      text: `El contacto ${nuevoContacto.nombre} fue creado correctamente`,
+      icon: "success",
+    });
+  }
 }
 
 //limpiar el form
 function limpiarFormulario() {
   formularioCrearContacto.reset();
+  const inputs=formularioCrearContacto.querySelectorAll(".form-control")
+  inputs.forEach(input=>{
+    input.classList.remove("is-valid","is-invalid")
+  })
 }
 
 function guardarEnElLocalStorage() {
@@ -72,6 +78,41 @@ function dibujarFila(contacto, index) {
                 <button class="btn btn-info" onclick="verContacto('${contacto.id}')"><i class="bi bi-eye"></i></button>
               </td>
             </tr>`;
+}
+//funciones de validaciones
+function validarCantidadCaracteres(input, min, max) {
+  if (input.value.trim().length >= min && input.value.trim().length <= max) {
+    input.classList.add("is-valid");
+    input.classList.remove("is-invalid");
+    return true;
+  } else {
+    input.classList.add("is-invalid");
+    input.classList.remove("is-valid");
+    return false;
+  }
+}
+
+function validarEmail() {
+  const regExp= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+  if (regExp.test(inputEmail.value)) {
+    inputEmail.classList.add("is-valid");
+    inputEmail.classList.remove("is-invalid");
+    return true;
+  } else {
+    inputEmail.classList.add("is-invalid");
+    inputEmail.classList.remove("is-valid");
+    return false;
+  }
+}
+
+function validaciones(){
+  let datosValidos=true
+  if(!validarCantidadCaracteres(inputNombre, 2, 50) === true){datosValidos=false}
+  if(!validarCantidadCaracteres(inputApellido, 2, 50) === true){datosValidos=false}
+  if(!validarCantidadCaracteres(inputNotas, 0, 250) === true){datosValidos=false}
+  if(!validarEmail()){datosValidos=false}
+  
+  return datosValidos
 }
 
 window.eliminarContacto = (id) => {
@@ -109,27 +150,28 @@ window.eliminarContacto = (id) => {
 
 function editarContacto() {
   //tomar los datos del formulario
-  console.log(idContacto)
+  console.log(idContacto);
   //buscar en el array donde esta el contacto que estoy editando para actualizar sus propiedades
-  const posicionContactoActualizar=agenda.findIndex((contacto)=>contacto.id===idContacto)
-  agenda[posicionContactoActualizar].nombre=inputNombre.value
-  agenda[posicionContactoActualizar].apellido=inputApellido.value
-  agenda[posicionContactoActualizar].telefono=inputTelefono.value
-  agenda[posicionContactoActualizar].email=inputEmail.value
-  agenda[posicionContactoActualizar].imagen=inputImagen.value
-  agenda[posicionContactoActualizar].notas=inputNotas.value
-  
+  const posicionContactoActualizar = agenda.findIndex(
+    (contacto) => contacto.id === idContacto
+  );
+  agenda[posicionContactoActualizar].nombre = inputNombre.value;
+  agenda[posicionContactoActualizar].apellido = inputApellido.value;
+  agenda[posicionContactoActualizar].telefono = inputTelefono.value;
+  agenda[posicionContactoActualizar].email = inputEmail.value;
+  agenda[posicionContactoActualizar].imagen = inputImagen.value;
+  agenda[posicionContactoActualizar].notas = inputNotas.value;
+
   //actualizar localstorage
-  guardarEnElLocalStorage()
+  guardarEnElLocalStorage();
   //mostrar un mje al usuario indicando que se actualizo el contacto
   Swal.fire({
     title: "Contacto modificado",
-    text: `El contacto ${ agenda[posicionContactoActualizar].nombre} fue modificado correctamente`,
+    text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente`,
     icon: "success",
   });
   //actualizar la tabla de contactos
   //traer la fila de la tabla que coincide con la variable posicionContactoActualizar y modificar sus datos
-
 }
 
 window.prepararContacto = (id) => {
@@ -147,17 +189,16 @@ window.prepararContacto = (id) => {
   inputImagen.value = contactoBuscado.imagen;
   inputNotas.value = contactoBuscado.notas;
   //cambiamos la variable para editar
-  creandoContacto=false
+  creandoContacto = false;
   //guardar el id del contacto que quiero modificar
-  idContacto=id
+  idContacto = id;
 };
 
-window.verContacto=(id)=>{
+window.verContacto = (id) => {
   console.log(id);
-  console.log(window.location)
-  window.location.href="/pages/detalleContacto.html?id="+id
-
-}
+  console.log(window.location);
+  window.location.href = "/pages/detalleContacto.html?id=" + id;
+};
 
 //declaro variables
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
@@ -175,7 +216,7 @@ const tablaContacto = document.getElementById("tablaContacto");
 //variable booleana
 let creandoContacto = true; //elsubmit me cree un contacto, pero si la pongo el false que el submit sea editar contacto
 //variable para poder editar un contacto es especifico
-let idContacto=null;
+let idContacto = null;
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", abrirModalContacto);
