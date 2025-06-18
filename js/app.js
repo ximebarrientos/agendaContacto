@@ -2,9 +2,7 @@ import Contacto from "./classContacto.js";
 
 // el usuario cliquea el boton agregar invocar a una funcion que muestre el modal
 function abrirModalContacto() {
-  const modalCrearContacto = new bootstrap.Modal(
-    document.getElementById("crearContacto")
-  );
+  
   limpiarFormulario();
   //mostrar ventana modal show es un metodo
   modalCrearContacto.show();
@@ -12,7 +10,7 @@ function abrirModalContacto() {
 }
 function crearContacto() {
   //to do traer todos los datos del formulario validados
-  if (validaciones()){
+  if (validaciones()) {
     //crear un objeto Contacto
     const nuevoContacto = new Contacto(
       inputNombre.value,
@@ -43,10 +41,10 @@ function crearContacto() {
 //limpiar el form
 function limpiarFormulario() {
   formularioCrearContacto.reset();
-  const inputs=formularioCrearContacto.querySelectorAll(".form-control")
-  inputs.forEach(input=>{
-    input.classList.remove("is-valid","is-invalid")
-  })
+  const inputs = formularioCrearContacto.querySelectorAll(".form-control");
+  inputs.forEach((input) => {
+    input.classList.remove("is-valid", "is-invalid");
+  });
 }
 
 function guardarEnElLocalStorage() {
@@ -93,7 +91,8 @@ function validarCantidadCaracteres(input, min, max) {
 }
 
 function validarEmail() {
-  const regExp= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+  const regExp =
+    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   if (regExp.test(inputEmail.value)) {
     inputEmail.classList.add("is-valid");
     inputEmail.classList.remove("is-invalid");
@@ -105,14 +104,22 @@ function validarEmail() {
   }
 }
 
-function validaciones(){
-  let datosValidos=true
-  if(!validarCantidadCaracteres(inputNombre, 2, 50) === true){datosValidos=false}
-  if(!validarCantidadCaracteres(inputApellido, 2, 50) === true){datosValidos=false}
-  if(!validarCantidadCaracteres(inputNotas, 0, 250) === true){datosValidos=false}
-  if(!validarEmail()){datosValidos=false}
-  
-  return datosValidos
+function validaciones() {
+  let datosValidos = true;
+  if (!validarCantidadCaracteres(inputNombre, 2, 50) === true) {
+    datosValidos = false;
+  }
+  if (!validarCantidadCaracteres(inputApellido, 2, 50) === true) {
+    datosValidos = false;
+  }
+  if (!validarCantidadCaracteres(inputNotas, 0, 250) === true) {
+    datosValidos = false;
+  }
+  if (!validarEmail()) {
+    datosValidos = false;
+  }
+
+  return datosValidos;
 }
 
 window.eliminarContacto = (id) => {
@@ -149,29 +156,34 @@ window.eliminarContacto = (id) => {
 };
 
 function editarContacto() {
-  //tomar los datos del formulario
-  console.log(idContacto);
-  //buscar en el array donde esta el contacto que estoy editando para actualizar sus propiedades
-  const posicionContactoActualizar = agenda.findIndex(
-    (contacto) => contacto.id === idContacto
-  );
-  agenda[posicionContactoActualizar].nombre = inputNombre.value;
-  agenda[posicionContactoActualizar].apellido = inputApellido.value;
-  agenda[posicionContactoActualizar].telefono = inputTelefono.value;
-  agenda[posicionContactoActualizar].email = inputEmail.value;
-  agenda[posicionContactoActualizar].imagen = inputImagen.value;
-  agenda[posicionContactoActualizar].notas = inputNotas.value;
+  //primero verificar que los datos son validos
+  if (validaciones()) {
+    //tomar los datos del formulario
+    console.log(idContacto);
+    //buscar en el array donde esta el contacto que estoy editando para actualizar sus propiedades
+    const posicionContactoActualizar = agenda.findIndex(
+      (contacto) => contacto.id === idContacto
+    );
+    agenda[posicionContactoActualizar].nombre = inputNombre.value;
+    agenda[posicionContactoActualizar].apellido = inputApellido.value;
+    agenda[posicionContactoActualizar].telefono = inputTelefono.value;
+    agenda[posicionContactoActualizar].email = inputEmail.value;
+    agenda[posicionContactoActualizar].imagen = inputImagen.value;
+    agenda[posicionContactoActualizar].notas = inputNotas.value;
 
-  //actualizar localstorage
-  guardarEnElLocalStorage();
-  //mostrar un mje al usuario indicando que se actualizo el contacto
-  Swal.fire({
-    title: "Contacto modificado",
-    text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente`,
-    icon: "success",
-  });
-  //actualizar la tabla de contactos
-  //traer la fila de la tabla que coincide con la variable posicionContactoActualizar y modificar sus datos
+    //actualizar localstorage
+    guardarEnElLocalStorage();
+    limpiarFormulario()
+    //mostrar un mje al usuario indicando que se actualizo el contacto
+    Swal.fire({
+      title: "Contacto modificado",
+      text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente`,
+      icon: "success",
+    });
+    //actualizar la tabla de contactos
+    //traer la fila de la tabla que coincide con la variable posicionContactoActualizar y modificar sus datos
+    modalCrearContacto.hide()
+  }
 }
 
 window.prepararContacto = (id) => {
@@ -201,6 +213,9 @@ window.verContacto = (id) => {
 };
 
 //declaro variables
+const modalCrearContacto = new bootstrap.Modal(
+    document.getElementById("crearContacto")
+  );
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
 const formularioCrearContacto = document.querySelector("form");
 const agenda = JSON.parse(localStorage.getItem("agendaKey")) || []; //asi me aseguro que agenda siempre sea un array
